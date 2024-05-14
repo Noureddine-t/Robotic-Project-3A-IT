@@ -4,7 +4,7 @@ from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QGridLayout, QHBoxLayout
 from martypy import Marty
 from DummyMarty import DummyMarty
-
+from MartyController import MartyController
 
 
 class MainWindow(QMainWindow):
@@ -12,9 +12,9 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Marty Control")
-
         self.my_marty = DummyMarty("wifi", "192.168.0.100")
-        #self.my_marty = Marty("wifi", "192.168.0.100")
+        self.controller = MartyController(self.my_marty)
+
         # Create a QGridLayout instance for arrow buttons
         grid_layout = QGridLayout()
         self.btn_forward = QPushButton("\u2191")  # Up arrow
@@ -61,15 +61,15 @@ class MainWindow(QMainWindow):
         hbox_layout.addLayout(grid_layout)
         hbox_layout.addLayout(vbox_layout)
 
-        # Connect each button to a method
-        self.btn_forward.clicked.connect(self.move_forward)
-        self.btn_backward.clicked.connect(self.move_backward)
-        self.btn_right.clicked.connect(self.turn_right)
-        self.btn_left.clicked.connect(self.turn_left)
-        self.btn_eyes.clicked.connect(self.manage_eyes)
-        self.btn_dance.clicked.connect(self.dance)
-        self.btn_celebrate.clicked.connect(self.celebrate)
-        self.btn_close.clicked.connect(self.close)
+        # Connect each button to a method in the controller
+        self.btn_forward.clicked.connect(self.controller.move_forward)
+        self.btn_backward.clicked.connect(self.controller.move_backward)
+        self.btn_right.clicked.connect(self.controller.turn_right)
+        self.btn_left.clicked.connect(self.controller.turn_left)
+        self.btn_eyes.clicked.connect(self.controller.manage_eyes)
+        self.btn_dance.clicked.connect(self.controller.dance)
+        self.btn_celebrate.clicked.connect(self.controller.celebrate)
+        self.btn_close.clicked.connect(self.controller.close)
 
         # Create a QWidget and set it as the central widget
         widget = QWidget()
@@ -79,36 +79,7 @@ class MainWindow(QMainWindow):
         self.setFixedSize(QSize(600, 300))  # Change the window size
         self.setStyleSheet("background-color: lightblue;")  # Set the background color to light blue
 
-    def move_forward(self):
-        self.my_marty.walk(2, 'auto', 0)
-
-    def move_backward(self):
-        self.my_marty.walk(2, 'auto', 180)
-
-    def turn_right(self):
-        self.my_marty.walk(2, 'auto', -90)
-
-    def turn_left(self):
-        self.my_marty.walk(2, 'auto', 90)
-
-    def manage_eyes(self):
-        self.my_marty.eyes('angry', 2, False)
-
-    def dance(self):
-        self.my_marty.dance()
-
-    def celebrate(self):
-        self.my_marty.celebrate()
-
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key.Key_Z:
-            self.move_forward()
-        elif event.key() == Qt.Key.Key_S:
-            self.move_backward()
-        elif event.key() == Qt.Key.Key_D:
-            self.turn_right()
-        elif event.key() == Qt.Key.Key_Q:
-            self.turn_left()
+        self.controller.keyPressEvent(event)
 
-    def close(self):
-        self.my_marty.close()
+
