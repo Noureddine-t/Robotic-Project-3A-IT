@@ -16,3 +16,6 @@ class DummyMarty:
 
     def close(self):
         print("DummyMarty is closing")
+
+    def get_battery_remaining(self):
+        return 100

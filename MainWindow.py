@@ -1,7 +1,7 @@
 import sys
 
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QGridLayout, QHBoxLayout
+from PyQt6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QGridLayout, QHBoxLayout, QLabel
 from martypy import Marty
 from DummyMarty import DummyMarty
 from MartyController import MartyController
@@ -12,8 +12,11 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Marty Control")
-        self.my_marty = DummyMarty("wifi", "192.168.0.100")
+        self.my_marty = Marty("wifi", "192.168.0.100")
         self.controller = MartyController(self.my_marty)
+
+        #self.my_marty = DummyMarty("wifi", "")
+        #self.controller = MartyController(self.my_marty)
 
         # Create a QGridLayout instance for arrow buttons
         grid_layout = QGridLayout()
@@ -80,6 +83,6 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: lightblue;")  # Set the background color to light blue
 
     def keyPressEvent(self, event):
-        self.controller.keyPressEvent(event)
+        self.controller.key_press_event(event)
 
 
