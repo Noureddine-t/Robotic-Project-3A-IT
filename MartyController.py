@@ -9,7 +9,8 @@ class MartyController:
         iterations = original_angle // max_angle
         last_angle = original_angle % max_angle
         return [max_angle * (1 if original_angle > 0 else -1)] * abs(iterations) + [last_angle]
-        #to do verifier cas avec virgule et négatif
+        # to do verifier cas avec virgule et négatif
+
     def move_forward(self):
         self.my_marty.walk(2, 'auto', 0)
 
@@ -17,13 +18,11 @@ class MartyController:
         for angle in self.divide_angle(180):
             self.my_marty.walk(2, 'auto', 180)
 
-    def turn_right(self):
-        for angle in self.divide_angle(90):
-            self.my_marty.walk(2, 'auto', angle)
+    def right_side_step(self):
+            self.my_marty.side_step("right", 4)
 
-    def turn_left(self):
-        for angle in self.divide_angle(-90):
-             self.my_marty.walk(2, 'auto', 90)
+    def left_side_step(self):
+            self.my_marty.sidestep("left", 4)
 
     def manage_eyes(self):
         self.my_marty.eyes('angry', 2, False)
@@ -40,11 +39,12 @@ class MartyController:
         elif event.key() == Qt.Key.Key_S:
             self.move_backward()
         elif event.key() == Qt.Key.Key_D:
-            self.turn_right()
+            self.right_side_step()
         elif event.key() == Qt.Key.Key_Q:
-            self.turn_left()
+            self.left_side_step()
 
     def close(self):
         self.my_marty.close()
+
     def baterry_percentage(self):
         battery_percentage = self.my_marty.get_battery_remaining()

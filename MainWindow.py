@@ -1,7 +1,7 @@
 import sys
 
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QGridLayout, QHBoxLayout, QLabel
+from PyQt6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QGridLayout, QHBoxLayout
 from martypy import Marty
 from DummyMarty import DummyMarty
 from MartyController import MartyController
@@ -12,12 +12,12 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Marty Control")
-        self.my_marty = Marty("wifi", "192.168.0.100")
+        self.my_marty = Marty("wifi", "192.168.0.101")
         self.controller = MartyController(self.my_marty)
 
         #self.my_marty = DummyMarty("wifi", "")
         #self.controller = MartyController(self.my_marty)
-
+    
         # Create a QGridLayout instance for arrow buttons
         grid_layout = QGridLayout()
         self.btn_forward = QPushButton("\u2191")  # Up arrow
@@ -31,7 +31,7 @@ class MainWindow(QMainWindow):
 
         # Set the size and style of the buttons
         button_size = QSize(50, 50)
-        button_style = "QPushButton { background-color: pink; }"
+        button_style = "QPushButton { background-color: black; }"
         self.btn_forward.setFixedSize(button_size)
         self.btn_backward.setFixedSize(button_size)
         self.btn_right.setFixedSize(button_size)
@@ -67,8 +67,8 @@ class MainWindow(QMainWindow):
         # Connect each button to a method in the controller
         self.btn_forward.clicked.connect(self.controller.move_forward)
         self.btn_backward.clicked.connect(self.controller.move_backward)
-        self.btn_right.clicked.connect(self.controller.turn_right)
-        self.btn_left.clicked.connect(self.controller.turn_left)
+        self.btn_right.clicked.connect(self.controller.right_side_step)
+        self.btn_left.clicked.connect(self.controller.left_side_step)
         self.btn_eyes.clicked.connect(self.controller.manage_eyes)
         self.btn_dance.clicked.connect(self.controller.dance)
         self.btn_celebrate.clicked.connect(self.controller.celebrate)

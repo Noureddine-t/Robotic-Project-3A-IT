@@ -17,5 +17,11 @@ class DummyMarty:
     def close(self):
         print("DummyMarty is closing")
 
+    def right__side_step(self, steps):
+        print(f"DummyMarty is side stepping right with steps={steps}")
+
+    def left_side_step(self, steps):
+        print(f"DummyMarty is side stepping left with steps={steps}")
+
     def get_battery_remaining(self):
         return 100
