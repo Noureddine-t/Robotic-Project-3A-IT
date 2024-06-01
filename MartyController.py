@@ -9,20 +9,24 @@ class MartyController:
         iterations = original_angle // max_angle
         last_angle = original_angle % max_angle
         return [max_angle * (1 if original_angle > 0 else -1)] * abs(iterations) + [last_angle]
-        # to do verifier cas avec virgule et négatif
 
     def move_forward(self):
-        self.my_marty.walk(2, 'auto', 0)
+        self.my_marty.walk()
 
     def move_backward(self):
-        for angle in self.divide_angle(180):
-            self.my_marty.walk(2, 'auto', 180)
+        self.my_marty.walk(turn=180)
 
     def right_side_step(self):
-            self.my_marty.side_step("right", 4)
+        self.my_marty.sidestep("right", 4)
 
     def left_side_step(self):
-            self.my_marty.sidestep("left", 4)
+        self.my_marty.sidestep("left", 4)
+
+    def turn_right(self):
+        self.my_marty.walk(turn=22.5)
+
+    def turn_left(self):
+        self.my_marty.walk(turn=-22.5)
 
     def manage_eyes(self):
         self.my_marty.eyes('angry', 2, False)
