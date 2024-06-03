@@ -22,14 +22,14 @@ class RobotInterface(QWidget):
         self.sensor_color_label = QLabel("Couleur: ")
         self.sensor_distance_label = QLabel("Distance: ")
         self.sensor_obstacle_label = QLabel("Obstacle: ")
-        self.move_up_button = QPushButton("↑")
-        self.move_down_button = QPushButton("↓")
-        self.move_left_button = QPushButton("←")
-        self.move_right_button = QPushButton("→")
-        self.set_eyes_button = QPushButton("Régler les Yeux")
-        self.start_dancing_button = QPushButton("Commencer à Danser")
-        self.start_celebrating_button = QPushButton("Commencer à Célébrer")
-        self.close_button = QPushButton("Fermer")
+        self.btn_forward = QPushButton("↑")
+        self.btn_backward = QPushButton("↓")
+        self.btn_left = QPushButton("←")
+        self.btn_right = QPushButton("→")
+        self.btn_eyes = QPushButton("Set Eyes")
+        self.btn_dance = QPushButton("Start Dancing")
+        self.btn_celebrate = QPushButton("Start Celebrating")
+        self.btn_close = QPushButton("Close")
 
         # Appliquer les styles CSS aux boutons
         def set_button_style(button, color, font_size=16):
@@ -38,33 +38,33 @@ class RobotInterface(QWidget):
         set_button_style(self.connect_button, green_color)
         set_button_style(self.disconnect_button, red_color)
 
-        set_button_style(self.move_up_button, blue_color, 25)
-        set_button_style(self.move_down_button, blue_color, 25)
-        set_button_style(self.move_left_button, blue_color, 25)
-        set_button_style(self.move_right_button, blue_color, 25)
+        set_button_style(self.btn_forward, blue_color, 25)
+        set_button_style(self.btn_backward, blue_color, 25)
+        set_button_style(self.btn_left, blue_color, 25)
+        set_button_style(self.btn_right, blue_color, 25)
 
-        for button in [self.set_eyes_button, self.start_dancing_button, self.start_celebrating_button, self.close_button]:
+        for button in [self.btn_eyes, self.btn_dance, self.btn_celebrate, self.btn_close]:
             button.setStyleSheet(button_style % (yellow_color, yellow_color))
 
         # Réduire la taille de la police et fixer la taille des boutons de déplacement
         font = QFont()
         font.setPointSize(20)
-        for button in [self.move_up_button, self.move_down_button, self.move_left_button, self.move_right_button]:
+        for button in [self.btn_forward, self.btn_backward, self.btn_left, self.btn_right]:
             button.setFont(font)
             button.setFixedSize(70, 70)
 
         # Mise en page pour les boutons de déplacement
         move_buttons_layout = QVBoxLayout()
-        move_buttons_layout.addWidget(self.move_up_button)
-        move_buttons_layout.addWidget(self.move_down_button)
+        move_buttons_layout.addWidget(self.btn_forward)
+        move_buttons_layout.addWidget(self.btn_backward)
         horizontal_buttons_layout = QHBoxLayout()
-        horizontal_buttons_layout.addWidget(self.move_left_button)
+        horizontal_buttons_layout.addWidget(self.btn_left)
         horizontal_buttons_layout.addLayout(move_buttons_layout)
-        horizontal_buttons_layout.addWidget(self.move_right_button)
+        horizontal_buttons_layout.addWidget(self.btn_right)
 
         # Mise en page pour les autres boutons
         other_buttons_layout = QVBoxLayout()
-        for button in [self.set_eyes_button, self.start_dancing_button, self.start_celebrating_button, self.close_button]:
+        for button in [self.btn_eyes, self.btn_dance, self.btn_celebrate, self.btn_close]:
             other_buttons_layout.addWidget(button)
 
         # Mise en page pour la connexion/déconnexion et les informations des capteurs
@@ -91,14 +91,14 @@ class RobotInterface(QWidget):
         # Connecter les boutons à leurs fonctions respectives
         self.connect_button.clicked.connect(self.connect_robot)
         self.disconnect_button.clicked.connect(self.disconnect_robot)
-        self.move_up_button.clicked.connect(self.move_up)
-        self.move_down_button.clicked.connect(self.move_down)
-        self.move_left_button.clicked.connect(self.move_left)
-        self.move_right_button.clicked.connect(self.move_right)
-        self.set_eyes_button.clicked.connect(self.set_eyes)
-        self.start_dancing_button.clicked.connect(self.start_dancing)
-        self.start_celebrating_button.clicked.connect(self.start_celebrating)
-        self.close_button.clicked.connect(self.close_application)
+        self.btn_forward.clicked.connect(self.move_up)
+        self.btn_backward.clicked.connect(self.move_down)
+        self.btn_left.clicked.connect(self.move_left)
+        self.btn_right.clicked.connect(self.move_right)
+        self.btn_eyes.clicked.connect(self.set_eyes)
+        self.btn_dance.clicked.connect(self.start_dancing)
+        self.btn_celebrate.clicked.connect(self.start_celebrating)
+        self.btn_close.clicked.connect(self.close_application)
 
     def get_battery_level(self):
          return "Battery: 88%"
