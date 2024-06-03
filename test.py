@@ -20,11 +20,11 @@ my_marty = Marty("wifi", "192.168.0.103")
 hex_color = my_marty.get_color_sensor_hex("left")
 print("hex_color: " + hex_color)
 
-color_sensor_val = my_marty.get_color_sensor_value_by_channel("left", "clear")
-print("color_sensor_val: " + str(color_sensor_val))
+#color_sensor_val = my_marty.get_color_sensor_value_by_channel("left", "clear")
+#print("color_sensor_val: " + str(color_sensor_val))
 
-get_ground_sensor = my_marty.get_ground_sensor_reading("left")
-print("get_ground_sensor: " + str(get_ground_sensor))
+#get_ground_sensor = my_marty.get_ground_sensor_reading("left")
+#print("get_ground_sensor: " + str(get_ground_sensor))
 
 #violet
 '''hex_color: 3b1c28
