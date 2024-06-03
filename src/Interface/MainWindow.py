@@ -1,18 +1,17 @@
-import sys
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QGridLayout, QHBoxLayout, QLabel
-from MartyController import MartyController
-from DummyMarty import DummyMarty
+from src.Controller.MartyController import MartyController
+from src.DummyMarty import DummyMarty
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Marty Control")
+        #self.setWindowTitle("Marty Control")
         self.controller = MartyController()
 
-        # self.controller = DummyMarty()
+        self.controller = DummyMarty()
 
         # Create a QLabel for the battery percentage
         self.battery_label = QLabel()
