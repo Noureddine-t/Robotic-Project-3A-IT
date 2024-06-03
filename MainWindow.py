@@ -6,16 +6,18 @@ from martypy import Marty
 from MartyController import MartyController
 from DummyMarty import DummyMarty
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("Marty Control")
-        #self.my_marty = Marty("wifi", "192.168.0.101")
-        #self.controller = MartyController(self.my_marty)
+        self.my_marty = Marty("wifi", "192.168.0.103")
+        self.controller = MartyController(self.my_marty)
 
         self.setWindowTitle("Marty Control")
-        self.controller = DummyMarty("wifi", "192.168.0.101")
+
+        #self.controller = DummyMarty("wifi", "192.168.0.101")
 
         # Create a QLabel for the battery percentage
         self.battery_label = QLabel()
@@ -29,8 +31,8 @@ class MainWindow(QMainWindow):
         self.btn_backward = QPushButton("\u2193")  # Down arrow
         self.btn_right = QPushButton("\u2192")  # Right arrow
         self.btn_left = QPushButton("\u2190")  # Left arrow
-        self.btn_turn_left = QPushButton("\u2196") # Up-left arrow
-        self.btn_turn_right = QPushButton("\u2197") # Up-right arrow
+        self.btn_turn_left = QPushButton("\u2196")  # Up-left arrow
+        self.btn_turn_right = QPushButton("\u2197")  # Up-right arrow
         grid_layout.addWidget(self.btn_forward, 0, 1)
         grid_layout.addWidget(self.btn_backward, 2, 1)
         grid_layout.addWidget(self.btn_right, 1, 2)
@@ -65,7 +67,7 @@ class MainWindow(QMainWindow):
         vbox_layout.addWidget(self.btn_dance)
         vbox_layout.addWidget(self.btn_celebrate)
         vbox_layout.addWidget(self.btn_close)
-        vbox_layout.insertLayout(0, battery_layout) # Insert the battery layout at the top
+        vbox_layout.insertLayout(0, battery_layout)  # Insert the battery layout at the top
         # Set the size of the other buttons
         other_button_size = QSize(100, 50)
         self.btn_eyes.setFixedSize(other_button_size)

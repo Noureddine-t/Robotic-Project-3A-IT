@@ -5,16 +5,11 @@ class MartyController:
     def __init__(self, marty):
         self.my_marty = marty
 
-    def divide_angle(self, original_angle, max_angle=45):
-        iterations = original_angle // max_angle
-        last_angle = original_angle % max_angle
-        return [max_angle * (1 if original_angle > 0 else -1)] * abs(iterations) + [last_angle]
-
     def move_forward(self):
         self.my_marty.walk()
 
     def move_backward(self):
-        self.my_marty.walk(turn=180)
+        self.my_marty.walk(step_length=-20)
 
     def right_side_step(self):
         self.my_marty.sidestep("right", 4)
@@ -23,10 +18,10 @@ class MartyController:
         self.my_marty.sidestep("left", 4)
 
     def turn_right(self):
-        self.my_marty.walk(turn=22.5)
+        self.my_marty.walk(turn=-15)
 
     def turn_left(self):
-        self.my_marty.walk(turn=-22.5)
+        self.my_marty.walk(turn=15)
 
     def manage_eyes(self):
         self.my_marty.eyes('angry', 2, False)
@@ -52,3 +47,4 @@ class MartyController:
 
     def baterry_percentage(self):
         battery_percentage = self.my_marty.get_battery_remaining()
+        return battery_percentage
