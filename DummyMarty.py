@@ -1,4 +1,4 @@
-class DummyMarty:
+    class DummyMarty:
     def __init__(self, connection_method, locator):
         print(f"DummyMarty initialized with connection_method={connection_method}, locator={locator}")
 
@@ -16,6 +16,8 @@ class DummyMarty:
 
     def close(self):
         print("DummyMarty is closing")
+
+
 
     def get_battery_remaining(self):
         return 100
