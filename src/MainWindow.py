@@ -1,8 +1,6 @@
 import sys
-
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QGridLayout, QHBoxLayout, QLabel
-from martypy import Marty
 from MartyController import MartyController
 from DummyMarty import DummyMarty
 
@@ -12,12 +10,9 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Marty Control")
-        self.my_marty = Marty("wifi", "192.168.0.103")
-        self.controller = MartyController(self.my_marty)
+        self.controller = MartyController()
 
-        self.setWindowTitle("Marty Control")
-
-        #self.controller = DummyMarty("wifi", "192.168.0.101")
+        # self.controller = DummyMarty()
 
         # Create a QLabel for the battery percentage
         self.battery_label = QLabel()
@@ -100,7 +95,14 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: lightblue;")  # Set the background color to light blue
 
     def keyPressEvent(self, event):
-        self.controller.key_press_event(event)
+        if event.key() == Qt.Key.Key_Z:
+            self.controller.move_forward()
+        elif event.key() == Qt.Key.Key_S:
+            self.controller.move_backward()
+        elif event.key() == Qt.Key.Key_D:
+            self.controller.right_side_step()
+        elif event.key() == Qt.Key.Key_Q:
+            self.controller.left_side_step()
 
     def update_battery_label(self):
         battery_percentage = self.controller.baterry_percentage()
