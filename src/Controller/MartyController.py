@@ -42,12 +42,32 @@ class MartyController:
         self.my_marty.stand_straight()
 
     def get_corlor(self):
-        # TODO: define this method
-        # color = self.my_marty.get_color()
-        hex_color = self.my_marty.get_color_sensor_hex()
-        color = int(hex_color, 16)
-        return color
+        hex_color = str(self.my_marty.get_color_sensor_hex("LeftColorSensor"))
+        red = int(hex_color[0:2], 16)
+        green = int(hex_color[2:4], 16)
+        blue = int(hex_color[4:6], 16)
+
+        color_ranges = {
+            "red": {"r": 110, "g": 19, "b": 20, "tolerance": 10},
+            "green": {"r": 40, "g": 35, "b": 26, "tolerance": 10},
+            "purple": {"r": 37, "g": 18, "b": 20, "tolerance": 10},
+            "yellow": {"r": 242, "g": 94, "b": 49, "tolerance": 10},
+            "black": {"r": 21, "g": 10, "b": 8, "tolerance": 10},
+            "dark_blue": {"r": 30, "g": 18, "b": 22, "tolerance": 10},
+            "light_blue": {"r": 66, "g": 64, "b": 73, "tolerance": 10},
+            "pink": {"r": 126, "g": 27, "b": 38, "tolerance": 10},
+        }
+        for color, values in color_ranges.items():
+            if (within_tolerance(red, values["r"], values["tolerance"]) and
+                    within_tolerance(green, values["g"], values["tolerance"]) and
+                    within_tolerance(blue, values["b"], values["tolerance"])):
+                return color
+        return "unknown"
 
     def baterry_percentage(self):
         battery_percentage = self.my_marty.get_battery_remaining()
         return battery_percentage
+
+
+def within_tolerance(value, target, tolerance):
+    return abs(value - target) <= tolerance
