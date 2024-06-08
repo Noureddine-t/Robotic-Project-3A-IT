@@ -1,4 +1,4 @@
-from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtCore import QSize, Qt, QTimer
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QGridLayout, QHBoxLayout, QLabel
 from src.Controller.MartyController import MartyController
 from src.DummyMarty import DummyMarty
@@ -8,17 +8,21 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        #self.setWindowTitle("Marty Control")
+        self.setWindowTitle("Marty Control")
         self.controller = MartyController()
 
-        self.controller = DummyMarty()
+        # self.controller = DummyMarty()
 
         # Create a QLabel for the battery percentage
         self.battery_label = QLabel()
         self.update_battery_label()
         battery_layout = QHBoxLayout()
         battery_layout.addWidget(self.battery_label)
-
+        self.color_label = QLabel()  # Create a QLabel for the color
+        # Create a QTimer instance to update the battery label every second
+        self.color_timer = QTimer()
+        self.color_timer.timeout.connect(self.update_color_label)
+        self.color_timer.start(1000)  # Update every second
         # Create a QGridLayout instance for arrow buttons
         grid_layout = QGridLayout()
         self.btn_forward = QPushButton("\u2191")  # Up arrow
@@ -33,7 +37,6 @@ class MainWindow(QMainWindow):
         grid_layout.addWidget(self.btn_left, 1, 0)
         grid_layout.addWidget(self.btn_turn_left, 0, 0)
         grid_layout.addWidget(self.btn_turn_right, 0, 2)
-
         # Set the size and style of the buttons
         button_size = QSize(50, 50)
         button_style = "QPushButton { background-color: black; }"
@@ -62,6 +65,8 @@ class MainWindow(QMainWindow):
         vbox_layout.addWidget(self.btn_celebrate)
         vbox_layout.addWidget(self.btn_close)
         vbox_layout.insertLayout(0, battery_layout)  # Insert the battery layout at the top
+        vbox_layout.addWidget(self.color_label)  # Add the color label to the layout
+
         # Set the size of the other buttons
         other_button_size = QSize(100, 50)
         self.btn_eyes.setFixedSize(other_button_size)
@@ -79,7 +84,7 @@ class MainWindow(QMainWindow):
         self.btn_backward.clicked.connect(self.controller.move_backward)
         self.btn_right.clicked.connect(self.controller.right_side_step)
         self.btn_left.clicked.connect(self.controller.left_side_step)
-        self.btn_eyes.clicked.connect(self.controller.manage_eyes)
+        self.btn_eyes.clicked.connect(self.controller.angry_eyes)
         self.btn_dance.clicked.connect(self.controller.dance)
         self.btn_celebrate.clicked.connect(self.controller.celebrate)
         self.btn_close.clicked.connect(self.controller.close)
@@ -104,5 +109,12 @@ class MainWindow(QMainWindow):
             self.controller.left_side_step()
 
     def update_battery_label(self):
-        battery_percentage = self.controller.baterry_percentage()
+        battery_percentage = self.controller.battery_percentage()
         self.battery_label.setText(f"Battery: {battery_percentage}%")
+
+    def update_color_label(self):
+        color = self.controller.get_color()
+        self.color_label.setText(f"Color: {color}")
+
+
+

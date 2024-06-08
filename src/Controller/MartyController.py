@@ -3,8 +3,16 @@ from martypy import Marty
 
 class MartyController:
     def __init__(self):
-        self.my_marty = Marty("wifi", "192.168.0.103")
+        self.my_marty = Marty("wifi", "192.168.0.106")
 
+    # connection
+    def connect(self, ip_addr):
+        self.my_marty = Marty("wifi", ip_addr)
+
+    def close(self):
+        self.my_marty.close()
+
+    # movement
     def move_forward(self):
         self.my_marty.walk()
 
@@ -23,25 +31,41 @@ class MartyController:
     def turn_left(self):
         self.my_marty.walk(turn=15)
 
-    def manage_eyes(self):
+    def stand_up(self):
+        self.my_marty.stand_straight()
+
+    # manage eyes
+    def angry_eyes(self):
         self.my_marty.eyes('angry')
 
+    def excited_eyes(self):
+        self.my_marty.eyes('excited')
+
+    def wiggle_eyes(self):
+        self.my_marty.eyes('wiggle')
+
+    def normal_eyes(self):
+        self.my_marty.eyes('normal')
+
+    def wide_eyes(self):
+        self.my_marty.eyes('wide')
+
+    # actions
     def dance(self):
         self.my_marty.dance()
 
     def celebrate(self):
         self.my_marty.celebrate()
 
-    def close(self):
-        self.my_marty.close()
-
     def stop(self):
         self.my_marty.stop()
 
-    def stand_up(self):
-        self.my_marty.stand_straight()
+    # sensor
+    def distance_sensor(self):
+        distance = self.my_marty.get_distance_sensor()
+        return distance
 
-    def get_corlor(self):
+    def get_color(self):
         hex_color = str(self.my_marty.get_color_sensor_hex("LeftColorSensor"))
         red = int(hex_color[0:2], 16)
         green = int(hex_color[2:4], 16)
@@ -64,7 +88,7 @@ class MartyController:
                 return color
         return "unknown"
 
-    def baterry_percentage(self):
+    def battery_percentage(self):
         battery_percentage = self.my_marty.get_battery_remaining()
         return battery_percentage
 
