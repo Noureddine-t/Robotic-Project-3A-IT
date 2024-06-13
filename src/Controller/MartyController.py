@@ -3,7 +3,7 @@ from martypy import Marty
 
 class MartyController:
     def __init__(self):
-        self.my_marty = Marty("wifi", "192.168.0.106")
+        self.my_marty = Marty("wifi", "192.168.0.102")
 
     # connection
     def connect(self, ip_addr):
@@ -14,23 +14,20 @@ class MartyController:
 
     # movement
     def move_forward(self):
-        self.my_marty.walk(num_steps=7)
+        self.my_marty.walk(num_steps=8)
         self.my_marty.stand_straight()
 
     def move_backward(self):
-        self.my_marty.walk(num_steps=7, step_length=-20)
+        self.my_marty.walk(num_steps=8, step_length=-25)
         self.my_marty.stand_straight()
-
 
     def right_side_step(self):
-        self.my_marty.sidestep("right", 4)
+        self.my_marty.sidestep("right", 7)
         self.my_marty.stand_straight()
-
 
     def left_side_step(self):
-        self.my_marty.sidestep("left", 4)
+        self.my_marty.sidestep("left", 7)
         self.my_marty.stand_straight()
-
 
     def turn_right(self):
         self.my_marty.walk(turn=-15)
@@ -79,13 +76,13 @@ class MartyController:
         blue = int(hex_color[4:6], 16)
 
         color_ranges = {
-            "red": {"r": 110, "g": 19, "b": 20, "tolerance": 10},
-            "green": {"r": 40, "g": 35, "b": 26, "tolerance": 10},
-            "yellow": {"r": 242, "g": 94, "b": 49, "tolerance": 10},
-            "black": {"r": 21, "g": 10, "b": 8, "tolerance": 10},
-            "dark_blue": {"r": 30, "g": 18, "b": 22, "tolerance": 10},
-            "light_blue": {"r": 66, "g": 64, "b": 73, "tolerance": 10},
-            "pink": {"r": 126, "g": 27, "b": 38, "tolerance": 10},
+            "red": {"r": 100, "g": 16, "b": 20, "tolerance": 13},
+            "green": {"r": 39, "g": 35, "b": 27, "tolerance": 13},
+            "yellow": {"r": 234, "g": 91, "b": 49, "tolerance": 13},
+            "black": {"r": 19, "g": 10, "b": 7, "tolerance": 13},
+            "dark_blue": {"r": 28, "g": 18, "b": 23, "tolerance": 13},
+            "light_blue": {"r": 64, "g": 63, "b": 80, "tolerance": 13},
+            "pink": {"r": 114, "g": 22, "b": 36, "tolerance": 13},
         }
         for color, values in color_ranges.items():
             if (within_tolerance(red, values["r"], values["tolerance"]) and
