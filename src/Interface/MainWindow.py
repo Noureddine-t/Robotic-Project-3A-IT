@@ -18,7 +18,9 @@ class MainWindow(QWidget):
         self.marty_controller = MartyController()
 
         # Styles CSS et couleurs pour les boutons
-        button_style = "QPushButton { background-color: %s; border: 2px solid %s; border-radius: 10px; color: #fff; font-size: 18px; padding: 10px; margin: 5px; } QPushButton:hover { background-color: #bbb; } QPushButton:pressed { background-color: #999; }"
+        button_style = ("QPushButton { background-color: %s; border: 2px solid %s; border-radius: 10px; color: #fff; "
+                        "font-size: 18px; padding: 10px; margin: 5px; } QPushButton:hover { background-color: #bbb; } "
+                        "QPushButton:pressed { background-color: #999; }")
         blue_color, red_color, yellow_color = "#00AF87", "#dc3545", "#269993"
 
         # Création des widgets

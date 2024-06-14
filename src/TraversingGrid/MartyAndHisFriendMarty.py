@@ -1,5 +1,150 @@
 from src.Controller.MartyController import MartyController
 
+
+def get_color(marty):
+    return marty.get_color()
+
+
+def move(marty, direction):
+    if direction == "forward":
+        marty.move_forward()
+    elif direction == "backward":
+        marty.move_backward()
+    elif direction == "left":
+        marty.left_side_step()
+    elif direction == "right":
+        marty.right_side_step()
+    marty.stand_up()
+
+
+def color_move(marty, color):
+    if color == "light_blue":
+        marty.move_forward()
+    elif color == "green":
+        marty.move_forward()
+    elif color == "dark_blue":
+        marty.right_side_step()
+    elif color == "pink":
+        marty.left_side_step()
+    elif color == "yellow":
+        marty.move_backward()
+    elif color == "red":
+        marty.celebrate()
+    marty.stand_up()
+
+
+def traverse_grid_parallel(marty1, marty2):
+    grid1 = [
+        ["black", "black", "black"],
+        ["black", "black", "black"],
+        ["black", "black", "black"]
+    ]
+    grid2 = [
+        ["black", "black", "black"],
+        ["black", "black", "black"],
+        ["black", "black", "black"]
+    ]
+
+    directions = [
+        ("forward", (0, 1)), ("forward", (0, 1)), ("left", (1, 0)),
+        ("backward", (0, -1)), ("backward", (0, -1)), ("left", (1, 0)),
+        ("forward", (0, 1)), ("forward", (0, 1))
+    ]
+
+    m1_x, m1_y = 0, 0
+    m2_x, m2_y = 0, 0
+
+    for move_direction, (dx, dy) in directions:
+        color1 = get_color(marty1)
+        color2 = get_color(marty2)
+
+        grid1[m1_x][m1_y] = color1
+        grid2[m2_x][m2_y] = color2
+
+        move(marty1, move_direction)
+        move(marty2, move_direction)
+
+        m1_x += dx
+        m1_y += dy
+        m2_x += dx
+        m2_y += dy
+
+    # Get the final color for both robots
+    color1 = get_color(marty1)
+    color2 = get_color(marty2)
+
+    grid1[m1_x][m1_y] = color1
+    grid2[m2_x][m2_y] = color2
+
+    return grid1, grid2
+
+
+def merge_color_grids(grid1, grid2):
+    merged_grid = [
+        ["black", "black", "black"],
+        ["black", "black", "black"],
+        ["black", "black", "black"]
+    ]
+
+    for i in range(3):
+        for j in range(3):
+            if grid1[i][j] == "black":
+                merged_grid[i][j] = grid2[i][j]
+            elif grid2[i][j] == "black":
+                merged_grid[i][j] = grid1[i][j]
+            elif grid1[i][j] == grid2[i][j]:
+                merged_grid[i][j] = grid1[i][j]
+            else:
+                merged_grid[i][j] = grid1[i][j]  # or grid2[i][j], depending on preference
+    return merged_grid
+
+
+def replay_moves(marty, grid):
+    m_x, m_y = 0, 0
+
+    # Start moving based on the initial position's color
+    while True:
+        color = grid[m_x][m_y]
+        if color == "red":
+            marty.celebrate()
+            break
+        color_move(marty, color)
+
+        if color == "light_blue" or color == "green":
+            m_x += 1
+        elif color == "dark_blue":
+            m_y += 1
+        elif color == "pink":
+            m_y -= 1
+        elif color == "yellow":
+            m_x -= 1
+
+        # Ensure the new coordinates are within grid bounds
+        if m_x < 0 or m_x >= 3 or m_y < 0 or m_y >= 3:
+            break
+
+
+# Initialisation des robots
+my_marty1 = MartyController()
+my_marty2 = MartyController()
+
+my_marty1.connect("192.168.0.102")
+my_marty2.connect("192.168.0.103")
+
+# Traverser les grilles avec les deux robots en parallèle
+grid1, grid2 = traverse_grid_parallel(my_marty1, my_marty2)
+print("Grid recorded by Marty1:", grid1)
+print("Grid recorded by Marty2:", grid2)
+
+# Fusionner les grilles de couleurs
+final_grid = merge_color_grids(grid1, grid2)
+print("Final merged grid:", final_grid)
+
+# Rejouer le chemin avec le premier robot si la couleur initiale est light_blue
+start_color = get_color(my_marty1)
+if start_color == "light_blue":
+    replay_moves(my_marty1, final_grid)
+
 '''def get_color(marty):
     return marty.get_color()
 
@@ -144,142 +289,3 @@ if start_color == "light_blue":
     replay_moves(my_marty1, colors_recorded)
     my_marty1.celebrate()
 """
-
-
-def get_color(marty):
-    return marty.get_color()
-
-
-def move(marty, direction):
-    if direction == "forward":
-        marty.move_forward()
-    elif direction == "backward":
-        marty.move_backward()
-    elif direction == "left":
-        marty.left_side_step()
-    elif direction == "right":
-        marty.right_side_step()
-    marty.stand_up()
-
-
-def color_move(marty, color):
-    if color == "light_blue":
-        marty.move_forward()
-    if color == "green":
-        marty.move_forward()
-    elif color == "dark_blue":
-        marty.right_side_step()
-    elif color == "pink":
-        marty.left_side_step()
-    elif color == "yellow":
-        marty.move_backward()
-    elif color == "red":
-        my_marty1.celebrate()
-    marty.stand_up()
-
-
-def traverse_grid_parallel(marty1, marty2):
-    grid1 = [
-        ["black", "black", "black"],
-        ["black", "black", "black"],
-        ["black", "black", "black"]
-    ]
-    grid2 = [
-        ["black", "black", "black"],
-        ["black", "black", "black"],
-        ["black", "black", "black"]
-    ]
-
-    directions = [
-        ("forward", (0, 1)), ("forward", (0, 1)), ("left", (1, 0)),
-        ("backward", (0, -1)), ("backward", (0, -1)), ("left", (1, 0)),
-        ("forward", (0, 1)), ("forward", (0, 1))
-    ]
-
-    m1_x, m1_y = 0, 0
-    m2_x, m2_y = 0, 0
-
-    for move_direction, (dx, dy) in directions:
-        color1 = get_color(marty1)
-        color2 = get_color(marty2)
-
-        grid1[m1_x][m1_y] = color1
-        grid2[m2_x][m2_y] = color2
-
-        move(marty1, move_direction)
-        move(marty2, move_direction)
-
-        m1_x += dx
-        m1_y += dy
-        m2_x += dx
-        m2_y += dy
-
-    # Get the final color for both robots
-    color1 = get_color(marty1)
-    color2 = get_color(marty2)
-
-    grid1[m1_x][m1_y] = color1
-    grid2[m2_x][m2_y] = color2
-
-    return grid1, grid2
-
-
-def merge_color_grids(grid1, grid2):
-    merged_grid = [
-        ["black", "black", "black"],
-        ["black", "black", "black"],
-        ["black", "black", "black"]
-    ]
-
-    for i in range(3):
-        for j in range(3):
-            if grid1[i][j] == "black":
-                merged_grid[i][j] = grid2[i][j]
-            elif grid2[i][j] == "black":
-                merged_grid[i][j] = grid1[i][j]
-            elif grid1[i][j] == grid2[i][j]:
-                merged_grid[i][j] = grid1[i][j]
-            else:
-                merged_grid[i][j] = grid1[i][j]  # or grid2[i][j], depending on preference
-    return merged_grid
-
-
-def replay_moves(marty, grid):
-    directions = [
-        ("forward", (0, 1)), ("forward", (0, 1)), ("left", (1, 0)),
-        ("backward", (0, -1)), ("backward", (0, -1)), ("left", (1, 0)),
-        ("forward", (0, 1)), ("forward", (0, 1))
-    ]
-
-    m_x, m_y = 0, 0
-    for move_direction, (dx, dy) in directions:
-        color = grid[m_x][m_y]
-        move(marty, color)
-        m_x += dx
-        m_y += dy
-
-    # Get the final color and move
-    color = grid[m_x][m_y]
-    move(marty, color)
-
-
-# Initialisation des robots
-my_marty1 = MartyController()
-my_marty2 = MartyController()
-
-my_marty1.connect("192.168.0.102")
-my_marty2.connect("192.168.0.103")
-
-# Traverser les grilles avec les deux robots en parallèle
-grid1, grid2 = traverse_grid_parallel(my_marty1, my_marty2)
-print("Grid recorded by Marty1:", grid1)
-print("Grid recorded by Marty2:", grid2)
-
-# Fusionner les grilles de couleurs
-final_grid = merge_color_grids(grid1, grid2)
-print("Final merged grid:", final_grid)
-
-# Rejouer le chemin avec le premier robot si la couleur initiale est light_blue
-start_color = get_color(my_marty1)
-if start_color == "light_blue":
-    replay_moves(my_marty1, final_grid)
