@@ -3,7 +3,7 @@ from martypy import Marty
 
 class MartyController:
     def __init__(self):
-        self.my_marty = Marty("wifi", "192.168.0.102")
+        self.my_marty = Marty("wifi", "192.168.0.101")
 
     # connection
     def connect(self, ip_addr):
@@ -76,14 +76,15 @@ class MartyController:
         blue = int(hex_color[4:6], 16)
 
         color_ranges = {
-            "red": {"r": 100, "g": 16, "b": 20, "tolerance": 13},
-            "green": {"r": 39, "g": 35, "b": 27, "tolerance": 13},
-            "yellow": {"r": 234, "g": 91, "b": 49, "tolerance": 13},
-            "black": {"r": 19, "g": 10, "b": 7, "tolerance": 13},
-            "dark_blue": {"r": 28, "g": 18, "b": 23, "tolerance": 13},
-            "light_blue": {"r": 64, "g": 63, "b": 80, "tolerance": 13},
-            "pink": {"r": 114, "g": 22, "b": 36, "tolerance": 13},
+            "red": {"r": 107, "g": 18, "b": 21, "tolerance": 13},
+            "green": {"r": 42, "g": 37, "b": 29, "tolerance": 13},
+            "yellow": {"r": 240, "g": 94, "b": 50, "tolerance": 13},
+            "black": {"r": 19, "g": 10, "b": 8, "tolerance": 13},
+            "dark_blue": {"r": 29, "g": 18, "b": 25, "tolerance": 13},
+            "light_blue": {"r": 66, "g": 8650, "b": 84, "tolerance": 13},
+            "pink": {"r": 123, "g": 26, "b": 40, "tolerance": 13},
         }
+
         for color, values in color_ranges.items():
             if (within_tolerance(red, values["r"], values["tolerance"]) and
                     within_tolerance(green, values["g"], values["tolerance"]) and

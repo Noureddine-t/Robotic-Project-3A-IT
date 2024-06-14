@@ -158,9 +158,8 @@ class MainWindow(QWidget):
         print("Closing application...")
         self.close()
 
-
-'''if __name__ == "__main__":
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     interface = MainWindow()
     interface.show()
-    sys.exit(app.exec())'''
+    sys.exit(app.exec())

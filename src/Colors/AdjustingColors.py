@@ -22,7 +22,7 @@ def detect_color(r, g, b, color_ranges):
     return "unknown"
 
 
-marty = Marty("wifi", "192.168.0.102")
+marty = Marty("wifi", "192.168.0.103")
 marty.set_blocking(False)
 
 marty.stand_straight()
@@ -35,13 +35,13 @@ while True:
 
     # Valeurs de référence pour les couleurs
     color_ranges = {
-        "red": {"r": 100, "g": 16, "b": 20, "tolerance": 13},
-        "green": {"r": 39, "g": 35, "b": 27, "tolerance": 13},
-        "yellow": {"r": 234, "g": 91, "b": 49, "tolerance": 13},
-        "black": {"r": 19, "g": 10, "b": 7, "tolerance": 13},
-        "dark_blue": {"r": 28, "g": 18, "b": 23, "tolerance": 13},
-        "light_blue": {"r": 64, "g": 63, "b": 80, "tolerance": 13},
-        "pink": {"r": 114, "g": 22, "b": 36, "tolerance": 13},
+        "red": {"r": 126, "g": 23, "b": 33, "tolerance": 13},
+        "green": {"r": 46, "g": 43, "b": 40, "tolerance": 13},
+        "yellow": {"r": 17, "g": 103, "b": 5, "tolerance": 13},
+        "black": {"r": 24, "g": 12, "b": 12, "tolerance": 13},
+        "dark_blue": {"r": 33, "g": 22, "b": 23, "tolerance": 13},
+        "light_blue": {"r": 77, "g": 80, "b": 110, "tolerance": 13},
+        "pink": {"r": 145, "g": 33, "b": 57, "tolerance": 13},
     }
 
     detected_color = detect_color(red_value, green_value, blue_value, color_ranges)

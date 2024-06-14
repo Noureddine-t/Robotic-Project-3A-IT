@@ -128,7 +128,7 @@ def replay_moves(marty, grid):
 my_marty1 = MartyController()
 my_marty2 = MartyController()
 
-my_marty1.connect("192.168.0.102")
+my_marty1.connect("192.168.0.101")
 my_marty2.connect("192.168.0.103")
 
 # Traverser les grilles avec les deux robots en parallèle
